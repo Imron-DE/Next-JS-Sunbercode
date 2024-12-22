@@ -27,7 +27,6 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
-// Mengimpor Layout secara dinamis
 const Layout = dynamic(() => import("@/components/layout/index"), { ssr: false });
 
 export async function getStaticProps() {
@@ -35,10 +34,9 @@ export async function getStaticProps() {
     const res = await fetch("https://service.pace-unv.cloud/api/notes");
     const listnotes = await res.json();
 
-    // Pastikan data API memiliki struktur yang benar
     return {
       props: {
-        notes: listnotes || [], // Jika tidak ada data, gunakan array kosong
+        notes: listnotes || [],
       },
       revalidate: 10,
     };
@@ -46,7 +44,7 @@ export async function getStaticProps() {
     console.error("Failed to fetch notes:", error);
     return {
       props: {
-        notes: [], // Kembalikan array kosong jika ada error
+        notes: [],
       },
     };
   }
